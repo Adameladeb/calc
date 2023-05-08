@@ -30,24 +30,12 @@
         font-size: 24px;
         color: #003580;
       }
-      #capture-btn {
-        display: block;
-        margin: 20px auto;
-        padding: 10px;
-        background-color: #003580;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 20px;
-        cursor: pointer;
-      }
     </style>
   </head>
   <body>
     <h1>Math Solver</h1>
     <img id="math-image" src="" alt="Math Equation">
     <div id="math-equation"></div>
-    <button id="capture-btn">Capture</button>
     <script>
       var imageCounter = 1;
       var intervalId = setInterval(function() {
@@ -83,12 +71,7 @@
         .catch(function(err) {
           console.log(err.name + ": " + err.message);
         });
-
-      var captureBtn = document.getElementById('capture-btn');
-      captureBtn.addEventListener('click', function() {
-        clearInterval(intervalId);
-        captureImage();
-      });
     </script>
   </body>
 </html>
+
